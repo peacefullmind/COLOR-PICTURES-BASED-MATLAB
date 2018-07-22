@@ -45,11 +45,53 @@ ds4=(r*sin(jd2).*sin(jd1)+h*sin(jd2).*cos(jd1)).^2+(r*cos(jd1)-h*sin(jd1)-r).^2+
  answer(1:k-1,1)=j1;
  answer(1:k-1,2)=j2;
 
- 
+ xlswrite('data.xls',answer);
 X=h.*sin(jd2).*cos(jd1);
 Y=-h*sin(jd1);
 Z=h.*cos(jd2).*cos(jd1)+h;
-plot3(X,Y,Z)
-xlabel('X');
-ylabel('Y');
-zlabel('Z');
+
+x=X';
+y=Y'
+z=Z';
+
+myA=[X' Y' Z'];
+
+[XX,YY,ZZ]=griddata(x,y,z,linspace(min(x),max(x))',linspace(min(y),max(y)),'linear');%插值 
+
+
+figure(1);
+pcolor(XX,YY,ZZ);grid on;%伪彩色图 
+colorbar
+ xlabel('x mm');
+ ylabel('y mm');
+ 
+figure(2);
+contourf(XX,YY,ZZ);grid on; %等高线图 
+colorbar
+ xlabel('x mm');
+ ylabel('y mm');
+ 
+ 
+figure(3);
+mesh(XX,YY,ZZ);grid on;%三维曲面
+colorbar
+ xlabel('x mm');
+ ylabel('y mm');
+ zlabel('z mm');
+
+figure(4);
+surf(XX,YY,ZZ);grid on;%图形的具体修饰，很多，请具体参考帮助系统
+colorbar
+ xlabel('x mm');
+ ylabel('y mm');
+ zlabel('z mm');
+
+ figure(5);
+ plot3(X,Y,Z);
+ xlabel('x mm');
+ ylabel('y mm');
+ zlabel('z mm');
+
+
+
+
